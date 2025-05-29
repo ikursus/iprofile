@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\ProgramController;
@@ -40,6 +41,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'pengurusan'], function () {
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/{id}', [UserController::class,'show'])->name('users.show');
+    Route::get('/users/{id}/print', [UserController::class,'print'])->name('users.print');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
@@ -60,6 +62,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'pengurusan'], function () {
     // Route::delete('/programs/create', [ProgramController::class, 'destroy'])->name('programs.destroy');
     // Route::resource('programs', ProgramController::class)->only('index', 'create', 'store', 'show', 'edit', 'update', 'destroy');
 
+    Route::get('export/users', [ExportController::class, 'exportUsers'])->name('export.users');
 });
 
 // Additional protected routes

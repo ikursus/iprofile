@@ -15,6 +15,11 @@
         <h5 class="card-title mb-0">All Users</h5>
     </div>
     <div class="card-body">
+<div class="mb-3">
+    <a href="{{ route('export.users') }}" class="btn btn-success">
+        <i class="bi bi-file-earmark-excel"></i> Export Users
+    </a>
+</div>
         @if($senaraiUsers->count() > 0)
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -44,6 +49,14 @@
                                         @method('DELETE')
                                         <input type="hidden" name="_method" value="DELETE">
                                         
+                                        <a class="btn btn-sm btn-outline-warning me-1" href="{{ route('users.print', $user->id) }}?print=stream">
+                                            <i class="bi bi-print"></i> View PDF
+                                        </a>
+
+                                        <a class="btn btn-sm btn-warning me-1" href="{{ route('users.print', $user->id) }}">
+                                            <i class="bi bi-print"></i> Download PDF
+                                        </a>
+
                                         <a class="btn btn-sm btn-outline-info me-1" href="{{ route('users.show', $user->id) }}">
                                             <i class="bi bi-eye"></i> Show
                                         </a>

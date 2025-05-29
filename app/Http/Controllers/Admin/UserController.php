@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\Program;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -149,5 +150,19 @@ class UserController extends Controller
 
         // Redirect ke senarai users
         return redirect()->route('users.index')->with('mesej-success', 'User deleted successfully');
+    }
+
+    public function print(Request $request, string $id)
+    {
+        $user = User::find($id);
+        
+        $pdf = Pdf::loadView('admin.template-users.print', compact('user'));
+
+        if ($request->input('print') == 'stream')
+        {
+            return $pdf->stream();
+        }
+
+        return $pdf->download($user->no_kp . '-user.pdf');
     }
 }
