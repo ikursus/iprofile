@@ -16,35 +16,52 @@
     </div>
     <div class="card-body">
         @if($senaraiUsers->count() > 0)
-            <ul class="list-group list-group-flush">
-                @foreach ($senaraiUsers as $user)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>{{ $loop->iteration }}</div>
-                        <div>
-                            <i class="bi bi-person"></i> {{ $user->name }}
-                            @if(isset($user->email))
-                                <small class="text-muted d-block">{{ $user->email }}</small>
-                            @endif
-                        </div>
-                        <div>
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" name="_method" value="DELETE">
-                                
-                                <a class="btn btn-sm btn-outline-primary me-1" href="{{ route('users.edit', $user->id) }}">
-                                    <i class="bi bi-pencil"></i> Edit
-                                </a>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>IC Number</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($senaraiUsers as $user)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>
+                                    <i class="bi bi-person"></i> {{ $user->name }}
+                                </td>
+                                <td>{{ $user->no_kp }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->phone }}</td>
+                                <td>
+                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        
+                                        <a class="btn btn-sm btn-outline-info me-1" href="{{ route('users.show', $user->id) }}">
+                                            <i class="bi bi-eye"></i> Show
+                                        </a>
 
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete user {{ $user->name }}?')">
-                                    <i class="bi bi-trash"></i> Padam
-                                </button>
+                                        <a class="btn btn-sm btn-outline-primary me-1" href="{{ route('users.edit', $user->id) }}">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </a>
 
-                            </form>
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete user {{ $user->name }}?')">
+                                            <i class="bi bi-trash"></i> Padam
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         @else
             <div class="text-center py-4">
                 <i class="bi bi-people display-1 text-muted"></i>
