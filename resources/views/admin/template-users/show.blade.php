@@ -168,7 +168,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach( $senaraiUserPrograms as $userProgram)
+                    @foreach( $user->programs as $userProgram)
                         <tr>
                             <td>{{ $userProgram->nama_program }}</td>
                             <td>{{ $userProgram->kategori_program }}</td>

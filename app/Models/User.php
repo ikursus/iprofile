@@ -51,4 +51,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    public function programs()
+    {
+        return $this->belongsToMany(Program::class, 'user_programs', 'user_id', 'program_id');
+    }
 }

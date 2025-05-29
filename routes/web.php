@@ -35,9 +35,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'pengurusan'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/dashboard/data', [DashboardController::class, 'getData'])->name('admin.dashboard.data');
 
-    // Programs Management
-    Route::resource('programs', ProgramController::class);
-
     // Users Management
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
@@ -50,6 +47,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'pengurusan'], function () {
     Route::post('/users/{id}/programs', [UserProgramController::class, 'store'])->name('users.programs.store');
     
 
+
+    // Programs Management
+    Route::resource('programs', ProgramController::class);
     // Route::resource('programs', ProgramController::class);
     // Route::get('/programs', [ProgramController::class, 'index'])->name('programs.index');
     // Route::get('/programs/create', [ProgramController::class, 'create'])->name('programs.create');

@@ -50,6 +50,9 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" role="group">
+                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('programs.show', $program->id) }}">
+                                            <i class="bi bi-pencil"></i> Peserta
+                                        </a>
                                         <a class="btn btn-sm btn-outline-primary" href="{{ route('programs.edit', $program->id) }}">
                                             <i class="bi bi-pencil"></i> Edit
                                         </a>

@@ -71,18 +71,19 @@ class UserController extends Controller
         $senaraiPrograms = Program::select('id', 'nama_program')->get();
 
         // Cara join table menerusi  Query Builder
-        $senaraiUserPrograms = DB::table('user_programs')
-            ->join('users', 'user_programs.user_id', '=', 'users.id')
-            ->join('program', 'user_programs.program_id', '=', 'program.id')
-            ->where('user_programs.user_id', '=', $id)
-            ->select('users.*', 
-                'users.no_kp as no_ic', 
-                'program.nama_program', 
-                'program.kategori_program', 
-                'program.jenis_kemahiran')
-            ->get();
+        // $senaraiUserPrograms = DB::table('user_programs')
+        //     ->join('users', 'user_programs.user_id', '=', 'users.id')
+        //     ->join('program', 'user_programs.program_id', '=', 'program.id')
+        //     ->where('user_programs.user_id', '=', $id)
+        //     ->select('users.*', 
+        //         'users.no_kp as no_ic', 
+        //         'program.nama_program', 
+        //         'program.kategori_program', 
+        //         'program.jenis_kemahiran')
+        //     ->get();
 
-        return view('admin.template-users.show', compact('user', 'senaraiPrograms', 'senaraiUserPrograms'));
+        // return view('admin.template-users.show', compact('user', 'senaraiPrograms', 'senaraiUserPrograms'));
+        return view('admin.template-users.show', compact('user', 'senaraiPrograms'));
     }
 
     /**

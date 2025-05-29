@@ -18,4 +18,9 @@ class Program extends Model
 
     // protected $guarded = [];
     // protected $timestamps = false;
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_programs', 'program_id', 'user_id');
+    }
 }
