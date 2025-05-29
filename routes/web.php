@@ -6,8 +6,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserProgramController;
+use App\Http\Controllers\Auth\PasswordResetController;
 
 // Format routing: Route::method('uri', $callback);
 Route::get('/', [PageController::class, 'homePage'])->name('page.home');
@@ -27,14 +28,6 @@ Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink'
 Route::get('/reset-password/{token}', [PasswordResetController::class, 'resetForm'])->name('password.reset');
 Route::post('/reset-password', [PasswordResetController::class, 'updatePassword'])->name('password.update');
 
-// Admin Dashboard Route (protected)
-Route::middleware(['auth'])->group(function () {
-    // Remove this conflicting route:
-    // Route::get('/dashboard', function () {
-    //     return view('admin.dashboard');
-    // })->name('admin.dashboard');
-});
-
 // Protected Admin Routes
 Route::group(['middleware' => 'auth', 'prefix' => 'pengurusan'], function () {
     
@@ -53,6 +46,20 @@ Route::group(['middleware' => 'auth', 'prefix' => 'pengurusan'], function () {
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::post('/users/{id}/programs', [UserProgramController::class, 'store'])->name('users.programs.store');
+    
+
+    // Route::resource('programs', ProgramController::class);
+    // Route::get('/programs', [ProgramController::class, 'index'])->name('programs.index');
+    // Route::get('/programs/create', [ProgramController::class, 'create'])->name('programs.create');
+    // Route::post('/programs', [ProgramController::class, 'store'])->name('programs.store');
+    // Route::get('/programs/{id}', [ProgramController::class, 'show'])->name('programs.show');
+    // Route::get('/programs/{id}/edit', [ProgramController::class, 'edit'])->name('programs.edit');
+    // Route::put('/programs/{id}/edit', [ProgramController::class, 'update'])->name('programs.update');
+    // Route::delete('/programs/create', [ProgramController::class, 'destroy'])->name('programs.destroy');
+    // Route::resource('programs', ProgramController::class)->only('index', 'create', 'store', 'show', 'edit', 'update', 'destroy');
+
 });
 
 // Additional protected routes
@@ -70,35 +77,6 @@ Route::middleware(['auth'])->group(function () {
         // Handle profile update logic
         return redirect()->route('profile.show')->with('mesej-success', 'Profil berjaya dikemaskini.');
     })->name('profile.update');
-});
-
-// Route::resource('programs', ProgramController::class);
-// Route::get('/programs', [ProgramController::class, 'index'])->name('programs.index');
-// Route::get('/programs/create', [ProgramController::class, 'create'])->name('programs.create');
-// Route::post('/programs', [ProgramController::class, 'store'])->name('programs.store');
-// Route::get('/programs/{id}', [ProgramController::class, 'show'])->name('programs.show');
-// Route::get('/programs/{id}/edit', [ProgramController::class, 'edit'])->name('programs.edit');
-// Route::put('/programs/{id}/edit', [ProgramController::class, 'update'])->name('programs.update');
-// Route::delete('/programs/create', [ProgramController::class, 'destroy'])->name('programs.destroy');
-// Route::resource('programs', ProgramController::class)->only('index', 'create', 'store', 'show', 'edit', 'update', 'destroy');
-
-
-
-Route::group(['middleware' => 'auth', 'prefix' => 'pengurusan'], function () {
-
-    Route::resource('programs', ProgramController::class);
-
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    Route::get('/users/{id}', [UserController::class,'show'])->name('users.show');
-    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-});
-
-Route::middleware(['auth'])->group(function () {
-    // Senarai routing yang ingin diprotect
 });
 
 

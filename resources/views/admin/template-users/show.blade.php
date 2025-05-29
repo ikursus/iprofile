@@ -168,7 +168,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    @foreach( $senaraiUserPrograms as $userProgram)
+                        <tr>
+                            <td>{{ $userProgram->nama_program }}</td>
+                            <td>{{ $userProgram->kategori_program }}</td>
+                            <td>{{ $userProgram->jenis_kemahiran }}</td>
+                            <td></td>
+                        </tr>
+
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -183,7 +191,7 @@
                 <h5 class="modal-title" id="addProgramModalLabel">Tambah Program Baharu</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="POST">
+            <form action="{{ route('users.programs.store', $user->id) }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     
@@ -191,6 +199,9 @@
                         <label for="program_id" class="form-label">Pilih Program</label>
                         <select class="form-select" id="program_id" name="program_id" required>
                             <option value="">Pilih Program</option>
+                            @foreach($senaraiPrograms as $program)
+                                <option value="{{ $program->id }}">{{ $program->nama_program }}</option>
+                            @endforeach
                         </select>
                     </div>
                     

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -67,7 +68,21 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return view('admin.template-users.show', compact('user'));
+        $senaraiPrograms = Program::select('id', 'nama_program')->get();
+
+        // Cara join table menerusi  Query Builder
+        $senaraiUserPrograms = DB::table('user_programs')
+            ->join('users', 'user_programs.user_id', '=', 'users.id')
+            ->join('program', 'user_programs.program_id', '=', 'program.id')
+            ->where('user_programs.user_id', '=', $id)
+            ->select('users.*', 
+                'users.no_kp as no_ic', 
+                'program.nama_program', 
+                'program.kategori_program', 
+                'program.jenis_kemahiran')
+            ->get();
+
+        return view('admin.template-users.show', compact('user', 'senaraiPrograms', 'senaraiUserPrograms'));
     }
 
     /**
