@@ -42,6 +42,11 @@
                                 </td>
                                 <td>{{ $user->no_kp }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>
+                                    @foreach($user->programs as $program)
+                                    <li>{{ $program->nama_program }}</li>
+                                    @endforeach
+                                </td>
                                 <td>{{ $user->phone }}</td>
                                 <td>
                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
